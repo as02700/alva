@@ -20,7 +20,12 @@ export class PreviewComponentError extends React.Component<ErrorBoundaryProps, E
 
 	public componentDidCatch(error: Error): void {
 		this.setState({
-			errorMessage: error.message
+			errorMessage: `
+				🚨 We detected an error in your connected library.
+				Please follow these steps:
+					1. Fix the library error
+					2. Update your library in Alva
+					3. Continue working`
 		});
 	}
 
@@ -50,7 +55,7 @@ const ErrorMessage: React.StatelessComponent<ErrorMessageProps> = props => (
 				lineHeight: '22px'
 			}}
 		>
-			{`<${props.patternName}/> failed to render: ${props.error}`}
+			{`<${props.patternName}/>: ${props.error}`}
 		</p>
 	</div>
 );
