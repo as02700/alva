@@ -59,7 +59,8 @@ export async function startApp(ctx: AppContext): Promise<{ emitter: Events.Event
 
 		// initialize macOS touchbar
 		if (ctx.app && ctx.win) {
-			const tb = createTouchbar({ app: ctx.app });
+			console.log('newly created touchbar');
+			const tb = createTouchbar({ app: ctx.app }, { sender });
 			const touchBar = new Electron.TouchBar(tb);
 			ctx.win.setTouchBar(touchBar);
 		}
