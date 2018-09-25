@@ -56,15 +56,20 @@ export async function startApp(ctx: AppContext): Promise<{ emitter: Events.Event
 			syncing.add(ctx.project);
 			ctx.project.sync(sender);
 		}
-
-		// initialize macOS touchbar
-		if (ctx.app && ctx.win) {
-			console.log('newly created touchbar');
-			const tb = createTouchbar({ app: ctx.app }, { sender });
-			const touchBar = new Electron.TouchBar(tb);
-			ctx.win.setTouchBar(touchBar);
-		}
 	});
+
+	Mobx.when(
+		() => typeof ctx.app !== 'undefined' && typeof ctx.win !== 'undefined',
+		() => {
+			// initialize macOS touchbar
+			if (ctx.app && ctx.win) {
+				console.log('newly created touchbar');
+				const tb = createTouchbar({ app: ctx.app }, { sender });
+				const touchBar = new Electron.TouchBar(tb);
+				ctx.win.setTouchBar(touchBar);
+			}
+		}
+	);
 
 	const serverMessageHandler = await createServerMessageHandler(ctx, {
 		emitter,
