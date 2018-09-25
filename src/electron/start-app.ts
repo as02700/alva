@@ -12,6 +12,7 @@ import * as Fs from 'fs';
 import { Sender } from '../sender/server';
 import { showMainMenu } from './show-main-menu';
 import { createServer } from '../server';
+import { createTouchbar } from './create-touchbar';
 import { createWindow } from './create-window';
 import * as uuid from 'uuid';
 
@@ -54,6 +55,13 @@ export async function startApp(ctx: AppContext): Promise<{ emitter: Events.Event
 		if (ctx.project && !syncing.has(ctx.project)) {
 			syncing.add(ctx.project);
 			ctx.project.sync(sender);
+		}
+
+		// initialize macOS touchbar
+		if (ctx.app && ctx.win) {
+			const tb = createTouchbar({ app: ctx.app });
+			const touchBar = new Electron.TouchBar(tb);
+			ctx.win.setTouchBar(touchBar);
 		}
 	});
 
