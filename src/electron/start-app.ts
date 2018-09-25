@@ -14,6 +14,7 @@ import { showMainMenu } from './show-main-menu';
 import { createServer } from '../server';
 import { createWindow } from './create-window';
 import * as uuid from 'uuid';
+import { createTouchbar } from './create-touchbar';
 
 const log = require('electron-log');
 
@@ -32,6 +33,7 @@ export interface AppContext {
 
 export async function startApp(ctx: AppContext): Promise<{ emitter: Events.EventEmitter }> {
 	log.info(`App starting ${ctx.hot ? 'with hot reloading' : ''}...`);
+	createTouchbar();
 
 	const emitter = new Events.EventEmitter();
 
