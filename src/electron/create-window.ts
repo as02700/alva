@@ -3,6 +3,7 @@ import { checkForUpdates } from './auto-updater';
 import { Color } from '../components/colors';
 import * as Electron from 'electron';
 import * as electronIsDev from 'electron-is-dev';
+import { createTouchbar } from './create-touchbar';
 
 export interface ElectronWindowContext {
 	window: undefined | Electron.BrowserWindow;
@@ -29,6 +30,10 @@ export async function createWindow(ctx: { port: number }): Promise<ElectronWindo
 	});
 
 	win.maximize();
+
+	// initiate touchbar
+	const touchBar = new Electron.TouchBar(createTouchbar());
+	win.setTouchBar(touchBar);
 
 	// and load the index.html of the app.
 	win.loadURL(`http://localhost:${ctx.port}/`);

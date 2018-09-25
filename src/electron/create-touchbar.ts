@@ -1,16 +1,23 @@
 import * as Electron from 'electron';
+
 const { TouchBarButton } = Electron.TouchBar;
 
 export function createTouchbar(): Electron.TouchBarConstructorOptions {
-	console.log('THIS IS A NEW TOUCHBAR');
 	return {
 		items: [
 			new TouchBarButton({
+				label: 'Test',
 				backgroundColor: '#00c4a7',
 				click: () => {
 					console.log('Test');
-				},
-				label: 'Test'
+				}
+			}),
+			new TouchBarButton({
+				label: 'Pages',
+				backgroundColor: '#a7c400',
+				click: () => {
+					console.log('Pages');
+				}
 			})
 		]
 	};
