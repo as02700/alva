@@ -12,7 +12,7 @@ import * as Fs from 'fs';
 import { Sender } from '../sender/server';
 import { showMainMenu } from './show-main-menu';
 import { createServer } from '../server';
-import { createTouchbar } from './create-touchbar';
+// import { createTouchbar } from './create-touchbar';
 import { createWindow } from './create-window';
 import * as uuid from 'uuid';
 
@@ -64,9 +64,35 @@ export async function startApp(ctx: AppContext): Promise<{ emitter: Events.Event
 			// initialize macOS touchbar
 			if (ctx.app && ctx.win) {
 				console.log('newly created touchbar');
-				const tb = createTouchbar({ app: ctx.app }, { sender });
-				const touchBar = new Electron.TouchBar(tb);
-				ctx.win.setTouchBar(touchBar);
+				// const tb = createTouchbar({ app: ctx.app }, { sender });
+				// const touchBar = new Electron.TouchBar(tb);
+
+				// SOLLTE funktionieren
+				const touchBar1 = new Electron.TouchBar([
+					new Electron.TouchBarButton({ label: 'label' }),
+					new Electron.TouchBarSpacer({ size: 'small' })
+				]);
+
+				// funktioniert
+				const touchBar2 = new Electron.TouchBar({
+					items: [
+						new Electron.TouchBarButton({ label: 'label' }),
+						new Electron.TouchBarSpacer({ size: 'small' })
+					]
+				});
+
+				// Touchbargroup in Touchbar funktioniert nicht mehr
+				const touchBar3 = new Electron.TouchBar({
+					items: [
+						new Electron.TouchBarButton({ label: 'label' }),
+						new Electron.TouchBarSpacer({ size: 'small' }),
+						new Electron.TouchBarGroup({
+							items: [new Electron.TouchBarButton({ label: 'label2' })]
+						})
+					]
+				});
+
+				ctx.win.setTouchBar(touchBar2);
 			}
 		}
 	);
